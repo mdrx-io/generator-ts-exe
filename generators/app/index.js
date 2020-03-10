@@ -32,24 +32,21 @@ module.exports = class extends Generator {
   }
 
   writing() {
+    const { title } = this.answers
+
     try {
-      fs.mkdirSync(`./${this.answers.title}`)
+      fs.mkdirSync(`./${title}`)
     } catch (err) {
-      this.log(`'${this.answers.title}' already exists. Exiting.`)
+      this.log(`'${title}' already exists. Exiting.`)
       process.exit(-1)
     }
 
-    this.destinationRoot(`./${this.answers.title}`)
+    this.destinationRoot(`./${title}`)
 
-    this.fs.copyTpl(this.templatePath('.gitignore'), this.destinationPath('./.gitignore'))
-    this.fs.copyTpl(this.templatePath('package.json'), this.destinationPath('./package.json'), {
-      title: this.answers.title,
-      description: this.answers.description,
-      author: this.answers.author,
-      license: this.answers.license,
-    })
-    this.fs.copyTpl(this.templatePath('.prettierrc'), this.destinationPath('./.prettierrc'))
-    this.fs.copyTpl(this.templatePath('.eslintrc'), this.destinationPath('./.eslintrc'))
+    this.fs.copyTpl(this.templatePath('.gitignore'), this.destinationPath('.gitignore'))
+    this.fs.copyTpl(this.templatePath('package.json'), this.destinationPath('package.json'), { ...this.answers })
+    this.fs.copyTpl(this.templatePath('.prettierrc'), this.destinationPath('.prettierrc'))
+    this.fs.copyTpl(this.templatePath('.eslintrc'), this.destinationPath('.eslintrc'))
 
     this.fs.extendJSON(this.destinationPath('package.json'), {
       devDependencies: {
