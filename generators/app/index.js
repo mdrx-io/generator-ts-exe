@@ -48,5 +48,20 @@ module.exports = class extends Generator {
       author: this.answers.author,
       license: this.answers.license,
     })
+    this.fs.copyTpl(this.templatePath('.prettierrc'), this.destinationPath('./.prettierrc'))
+    this.fs.copyTpl(this.templatePath('.eslintrc'), this.destinationPath('./.eslintrc'))
+
+    this.fs.extendJSON(this.destinationPath('package.json'), {
+      devDependencies: {
+        eslint: '^6.8.0',
+        'eslint-config-prettier': '^6.10.0',
+        'eslint-plugin-prettier': '^3.1.2',
+        prettier: '^1.19.1',
+      },
+    })
+  }
+
+  install() {
+    this.yarnInstall()
   }
 }

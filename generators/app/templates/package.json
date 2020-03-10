@@ -2,6 +2,9 @@
   "name": "<%= title %>",
   "version": "0.1.0",
   "description": "<%= description %>",
-  "license": "<%= license %>",
-  "author": "<%= author %>"
+  "scripts": {
+    "lint": "npx eslint src/*"
+  },
+  "author": "<%= author %>",
+  "license": "<%= license %>"
 }
