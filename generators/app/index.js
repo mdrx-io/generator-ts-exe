@@ -7,7 +7,7 @@ module.exports = class extends Generator {
       {
         type: 'input',
         name: 'title',
-        message: 'Your project title (kabob-case)',
+        message: 'Your project title (kebab-case)',
       },
       {
         type: 'input',
