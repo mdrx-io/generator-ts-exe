@@ -22,6 +22,9 @@
   "scripts": {
     "test": "jest"
   },
+  "files": [
+    "app"
+  ],
   "keywords": [
     "yeoman-generator"
   ],
