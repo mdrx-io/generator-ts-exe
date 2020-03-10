@@ -41,6 +41,7 @@ module.exports = class extends Generator {
 
     this.destinationRoot(`./${this.answers.title}`)
 
+    this.fs.copyTpl(this.templatePath('.gitignore'), this.destinationPath('./.gitignore'))
     this.fs.copyTpl(this.templatePath('package.json'), this.destinationPath('./package.json'), {
       title: this.answers.title,
       description: this.answers.description,
