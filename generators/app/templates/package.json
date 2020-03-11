@@ -3,7 +3,11 @@
   "version": "0.1.0",
   "description": "<%= description %>",
   "scripts": {
-    "lint": "npx eslint src/*"
+    "clean": "rm -rf build",
+    "lint": "npx eslint src/*",
+    "compile": "tsc",
+    "compile-all": "yarn run clean && yarn run lint && yarn run compile",
+    "start": "yarn run compile && node build/index.js"
   },
   "author": "<%= author %>",
   "license": "<%= license %>"

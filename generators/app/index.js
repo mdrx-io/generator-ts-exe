@@ -47,13 +47,19 @@ module.exports = class extends Generator {
     this.fs.copyTpl(this.templatePath('package.json'), this.destinationPath('package.json'), { ...this.answers })
     this.fs.copyTpl(this.templatePath('.prettierrc'), this.destinationPath('.prettierrc'))
     this.fs.copyTpl(this.templatePath('.eslintrc'), this.destinationPath('.eslintrc'))
+    this.fs.copyTpl(this.templatePath('tsconfig.json'), this.destinationPath('tsconfig.json'))
+    this.fs.copyTpl(this.templatePath('src'), this.destinationPath('src'))
 
     this.fs.extendJSON(this.destinationPath('package.json'), {
       devDependencies: {
+        '@types/node': '^13.7.7',
+        '@typescript-eslint/eslint-plugin': '^2.21.0',
+        '@typescript-eslint/parser': '^2.21.0',
         eslint: '^6.8.0',
         'eslint-config-prettier': '^6.10.0',
         'eslint-plugin-prettier': '^3.1.2',
         prettier: '^1.19.1',
+        typescript: '^3.8.2',
       },
     })
   }
