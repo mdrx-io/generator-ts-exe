@@ -1,1 +1,3 @@
-console.log('Hello, World!')
+import app from './app'
+
+console.log(app.foo)

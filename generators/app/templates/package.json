@@ -3,11 +3,14 @@
   "version": "0.1.0",
   "description": "<%= description %>",
   "scripts": {
-    "clean": "rm -rf build",
-    "lint": "npx eslint src/*",
+    "clean": "rm -rf build dist",
+    "lint": "eslint src/*",
     "compile": "tsc",
-    "compile-all": "yarn run clean && yarn run lint && yarn run compile",
-    "start": "yarn run compile && node build/index.js"
+    "bundle": "webpack",
+    "minify": "babel build/bundle.js --out-file dist/<%= title %>.js",
+    "start": "yarn compile && node build/index.js",
+    "build-all": "yarn clean && yarn lint && yarn compile && yarn bundle && yarn minify",
+    "build-exe": "yarn build-all && pkg --out-path dist/ dist/<%= title %>.js"
   },
   "author": "<%= author %>",
   "license": "<%= license %>"

@@ -4,7 +4,7 @@
     "esModuleInterop": true,
     "target": "ES6",
     "moduleResolution": "Node",
-    "sourceMap": true,
+    "sourceMap": false,
     "outDir": "build"
   },
   "lib": ["ES2015"]
