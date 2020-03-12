@@ -69,7 +69,6 @@ module.exports = class extends Generator {
         typescript: '^3.8.2',
         webpack: '^4.41.6',
         'webpack-cli': '^3.3.11',
-        'webpack-node-externals': '^1.7.2',
       },
     })
   }
