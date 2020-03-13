@@ -1,3 +1,6 @@
+import debug from 'debug'
 import app from './app'
 
-console.log(app.logString)
+const logger = { log: debug('index') }
+
+logger.log(app.logString)

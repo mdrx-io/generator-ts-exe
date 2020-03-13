@@ -90,6 +90,6 @@ module.exports = class extends Generator {
       ],
       { dev: true },
     )
-    this.yarnInstall(['luxon'])
+    this.yarnInstall(['debug', 'luxon'])
   }
 }
