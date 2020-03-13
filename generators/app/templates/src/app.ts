@@ -1,3 +1,3 @@
 import { DateTime } from 'luxon'
 
-export default { local: DateTime.local() }
+export default { local: DateTime.local(), logString: 'Hello, World!' }

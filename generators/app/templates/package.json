@@ -5,11 +5,13 @@
   "scripts": {
     "clean": "rm -rf build dist",
     "lint": "eslint src/*",
+    "test": "jest --coverage",
     "compile": "tsc",
     "bundle": "webpack",
     "minify": "babel build/bundle.js --out-file dist/<%= title %>.js",
+    "dev": "yarn test --watch",
     "start": "yarn compile && node build/index.js",
-    "build-all": "yarn clean && yarn lint && yarn compile && yarn bundle && yarn minify",
+    "build-all": "yarn clean && yarn lint && yarn test && yarn compile && yarn bundle && yarn minify",
     "build-exe": "yarn build-all && pkg --out-path dist/ dist/<%= title %>.js"
   },
   "author": "<%= author %>",

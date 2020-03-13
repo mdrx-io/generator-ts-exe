@@ -44,7 +44,16 @@ module.exports = class extends Generator {
     this.destinationRoot(`./${title}`)
 
     // Copy files.
-    const files = ['.gitignore', '.prettierrc', '.eslintrc', 'tsconfig.json', 'webpack.config.js', '.babelrc', 'src']
+    const files = [
+      '.gitignore',
+      '.prettierrc',
+      '.eslintrc',
+      'jest.config.js',
+      'tsconfig.json',
+      'webpack.config.js',
+      '.babelrc',
+      'src',
+    ]
     files.forEach(v => this.fs.copy(this.templatePath(v), this.destinationPath(v)))
     // Copy files with template args.
     this.fs.copyTpl(this.templatePath('package.json'), this.destinationPath('package.json'), { ...this.answers })
@@ -63,6 +72,7 @@ module.exports = class extends Generator {
         '@babel/cli',
         '@babel/core',
         '@babel/preset-env',
+        '@types/jest',
         '@types/node',
         '@typescript-eslint/eslint-plugin',
         '@typescript-eslint/parser',
@@ -70,8 +80,10 @@ module.exports = class extends Generator {
         'eslint',
         'eslint-config-prettier',
         'eslint-plugin-prettier',
+        'jest',
         'pkg',
         'prettier',
+        'ts-jest',
         'typescript',
         'webpack',
         'webpack-cli',
