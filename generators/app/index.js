@@ -1,4 +1,5 @@
 const fs = require('fs')
+const { DateTime } = require('luxon')
 const Generator = require('yeoman-generator')
 
 module.exports = class extends Generator {
@@ -33,6 +34,7 @@ module.exports = class extends Generator {
 
   writing() {
     const { title } = this.answers
+    const year = DateTime.local().year
 
     try {
       fs.mkdirSync(`./${title}`)
@@ -55,8 +57,14 @@ module.exports = class extends Generator {
       'src',
     ]
     files.forEach(v => this.fs.copy(this.templatePath(v), this.destinationPath(v)))
-    // Copy files with template args.
-    this.fs.copyTpl(this.templatePath('package.json'), this.destinationPath('package.json'), { ...this.answers })
+
+    // Copy templates with args.
+    const templates = [
+      ['package.json', { ...this.answers }],
+      ['README.md', { title: this.answers.title, description: this.answers.description }],
+      ['LICENSE.txt', { author: this.answers.author, year }],
+    ]
+    templates.forEach(v => this.fs.copyTpl(this.templatePath(v[0]), this.destinationPath(v[0]), v[1]))
 
     // Use this to track fixed versions of dependencies. Example:
     // this.fs.extendJSON(this.destinationPath('package.json'), {

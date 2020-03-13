@@ -29,6 +29,7 @@
     "yeoman-generator"
   ],
   "dependencies": {
+    "luxon": "^1.22.0",
     "yeoman-generator": "^4.7.0"
   }
 }
