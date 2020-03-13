@@ -22,6 +22,8 @@ $ npm install --global yo generator-ts-exe
 
 No CLI options available yet. A basic prompt will fill out the `package.json` and name the artifacts in the project's `dist/`.
 
+_Note, the "License" prompt will not lead to a LICENSE.txt file produced - for now, you must add that yourself._
+
 ```bash
 $ yo ts-exe
 ? Your project title (kebab-case) # foo
@@ -59,3 +61,10 @@ The resulting project scaffold will include the following:
 - bundling via [webpack](https://webpack.js.org/)
 - minification and compatibility via [Babel](https://babeljs.io/docs/en/babel-preset-minify)
 - executable packaging via [Pkg](https://github.com/zeit/pkg#readme) for portability
+- a bare README.md file
+
+## TODO
+
+- Add LICENSE.txt generation derived from the selection provided to the prompt.
+- CLI options for shorthand bootstrapping and automation.
+- Conditional `yarn` or `npm` use in the scaffold output.
