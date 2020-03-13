@@ -1,3 +1,3 @@
 import app from './app'
 
-console.log(app.foo)
+console.log(app.local)

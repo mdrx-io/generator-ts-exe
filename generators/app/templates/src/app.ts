@@ -1,3 +1,3 @@
-const msg = { foo: 'Bar!' }
+import { DateTime } from 'luxon'
 
-export default msg
+export default { local: DateTime.local() }
