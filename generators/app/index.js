@@ -62,7 +62,6 @@ module.exports = class extends Generator {
     const templates = [
       ['package.json', { ...this.answers }],
       ['README.md', { title: this.answers.title, description: this.answers.description }],
-      ['LICENSE.txt', { author: this.answers.author, year }],
     ]
     templates.forEach(v => this.fs.copyTpl(this.templatePath(v[0]), this.destinationPath(v[0]), v[1]))
 
