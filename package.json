@@ -26,7 +26,15 @@
     "generators"
   ],
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "executable",
+    "scaffold",
+    "typescript",
+    "pkg",
+    "app",
+    "application",
+    "utility",
+    "node"
   ],
   "dependencies": {
     "luxon": "^1.22.0",
