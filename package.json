@@ -23,7 +23,7 @@
     "test": "jest"
   },
   "files": [
-    "app"
+    "generators"
   ],
   "keywords": [
     "yeoman-generator"
