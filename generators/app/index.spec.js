@@ -1,18 +1,31 @@
 const fs = require('fs')
 const path = require('path')
 const helpers = require('yeoman-test')
+const rimraf = require('rimraf')
 
 describe('generators:app', () => {
   let generator
+  let originalError
 
-  beforeEach(() => {
-    helpers.run(path.join(__dirname, '../app')).inTmpDir(function(dir) {
-      var done = this.async() // `this` is the RunContext object.
-      fs.copy(path.join(__dirname, '../templates/common'), dir, done)
+  beforeEach(done => {
+    // skipInstall: true generates warnings in console.error which are just informational.
+    // So, we suppress those warnings here.
+    originalError = console.error
+    console.error = jest.fn()
+
+    helpers.testDirectory(path.join(__dirname, 'temp'), () => {
+      generator = helpers.createGenerator('ts-exe', ['../'], undefined, { skipInstall: true })
+      done()
     })
   })
 
-  it('generates a project', () => {
+  afterEach(() => {
+    console.error = jest.fn()
+
+    rimraf.sync(path.join(__dirname, 'temp'))
+  })
+
+  it('generates expected files', async () => {
     helpers.mockPrompt(generator, {
       title: 'foo',
       description: '',
@@ -20,19 +33,24 @@ describe('generators:app', () => {
       license: '',
     })
 
-    generator.run().then(() => {
-      assert.file([
-        '.editorconfig',
-        '.gitattributes',
-        '.gitignore',
-        '.travis.yml',
-        'index.js',
-        'index.html',
-        'index.css',
-        'license',
-        'package.json',
-        'readme.md',
-      ])
+    await generator.run()
+
+    const files = [
+      '.gitignore',
+      '.prettierrc',
+      '.eslintrc',
+      'jest.config.js',
+      'tsconfig.json',
+      'webpack.config.js',
+      '.babelrc',
+      'src/app.spec.ts',
+      'src/app.ts',
+      'src/index.ts',
+      'package.json',
+      'README.md',
+    ]
+    files.forEach(file => {
+      expect(fs.existsSync(file)).toBe(true)
     })
   })
 })
