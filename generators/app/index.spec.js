@@ -25,6 +25,48 @@ describe('generators:app', () => {
     rimraf.sync(path.join(__dirname, 'temp'))
   })
 
+  it('generates a project directory', async () => {
+    const oldExit = process.exit
+    process.exit = jest.fn()
+
+    const title = 'foo'
+
+    helpers.mockPrompt(generator, {
+      title,
+      description: '',
+      author: 'Bar Baz',
+      license: '',
+    })
+
+    await generator.run()
+
+    expect(process.exit).not.toHaveBeenCalled()
+
+    process.exit = oldExit
+  })
+
+  it('fails if directory exists', async () => {
+    const oldExit = process.exit
+    process.exit = jest.fn()
+
+    const title = 'foo'
+
+    helpers.mockPrompt(generator, {
+      title,
+      description: '',
+      author: 'Bar Baz',
+      license: '',
+    })
+
+    fs.mkdirSync(path.join(__dirname, 'temp', title))
+
+    await generator.run()
+
+    expect(process.exit).toHaveBeenCalled()
+
+    process.exit = oldExit
+  })
+
   it('generates expected files', async () => {
     helpers.mockPrompt(generator, {
       title: 'foo',
