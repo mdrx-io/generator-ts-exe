@@ -62,9 +62,3 @@ The resulting project scaffold will include the following:
 - minification and compatibility via [Babel](https://babeljs.io/docs/en/babel-preset-minify)
 - executable packaging via [Pkg](https://github.com/zeit/pkg#readme) for portability
 - a bare README.md file
-
-## TODO
-
-- Add LICENSE.txt generation derived from the selection provided to the prompt.
-- CLI options for shorthand bootstrapping and automation.
-- Conditional `yarn` or `npm` use in the scaffold output.
