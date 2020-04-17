@@ -47,7 +47,6 @@ module.exports = class extends Generator {
 
     // Copy files.
     const files = [
-      '.gitignore',
       '.prettierrc',
       '.eslintrc',
       'jest.config.js',
@@ -57,6 +56,7 @@ module.exports = class extends Generator {
       'src',
     ]
     files.forEach(v => this.fs.copy(this.templatePath(v), this.destinationPath(v)))
+    this.fs.copy(this.templatePath('ignore'), this.destinationPath('.gitignore'))
 
     // Copy templates with args.
     const templates = [
