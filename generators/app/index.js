@@ -1,6 +1,7 @@
 const fs = require('fs')
 const { DateTime } = require('luxon')
 const Generator = require('yeoman-generator')
+const commandExistsSync = require('command-exists').sync
 
 module.exports = class extends Generator {
   async prompting() {
@@ -55,7 +56,7 @@ module.exports = class extends Generator {
       '.babelrc',
       'src',
     ]
-    files.forEach(v => this.fs.copy(this.templatePath(v), this.destinationPath(v)))
+    files.forEach((v) => this.fs.copy(this.templatePath(v), this.destinationPath(v)))
     this.fs.copy(this.templatePath('ignore'), this.destinationPath('.gitignore'))
 
     // Copy templates with args.
@@ -63,7 +64,7 @@ module.exports = class extends Generator {
       ['package.json', { ...this.answers }],
       ['README.md', { title: this.answers.title, description: this.answers.description }],
     ]
-    templates.forEach(v => this.fs.copyTpl(this.templatePath(v[0]), this.destinationPath(v[0]), v[1]))
+    templates.forEach((v) => this.fs.copyTpl(this.templatePath(v[0]), this.destinationPath(v[0]), v[1]))
 
     // Use this to track fixed versions of dependencies. Example:
     // this.fs.extendJSON(this.destinationPath('package.json'), {
@@ -74,29 +75,34 @@ module.exports = class extends Generator {
   }
 
   install() {
-    this.yarnInstall(
-      [
-        '@babel/cli',
-        '@babel/core',
-        '@babel/preset-env',
-        '@types/jest',
-        '@types/node',
-        '@typescript-eslint/eslint-plugin',
-        '@typescript-eslint/parser',
-        'babel-preset-minify',
-        'eslint',
-        'eslint-config-prettier',
-        'eslint-plugin-prettier',
-        'jest',
-        'pkg',
-        'prettier',
-        'ts-jest',
-        'typescript',
-        'webpack',
-        'webpack-cli',
-      ],
-      { dev: true },
-    )
-    this.yarnInstall(['debug'])
+    const devDeps = [
+      '@babel/cli',
+      '@babel/core',
+      '@babel/preset-env',
+      '@types/jest',
+      '@types/node',
+      '@typescript-eslint/eslint-plugin',
+      '@typescript-eslint/parser',
+      'babel-preset-minify',
+      'eslint',
+      'eslint-config-prettier',
+      'eslint-plugin-prettier',
+      'jest',
+      'pkg',
+      'prettier',
+      'ts-jest',
+      'typescript',
+      'webpack',
+      'webpack-cli',
+    ]
+    const deps = ['debug']
+
+    if (commandExistsSync('yarn')) {
+      this.yarnInstall(devDeps, { dev: true })
+      this.yarnInstall(deps)
+    } else {
+      this.npmInstall(devDeps, { dev: true })
+      this.npmInstall(deps)
+    }
   }
 }

@@ -2,12 +2,13 @@ const fs = require('fs')
 const path = require('path')
 const helpers = require('yeoman-test')
 const rimraf = require('rimraf')
+const commandExistsSync = require('command-exists')
 
 describe('generators:app', () => {
   let generator
   let originalError
 
-  beforeEach(done => {
+  beforeEach((done) => {
     // skipInstall: true generates warnings in console.error which are just informational.
     // So, we suppress those warnings here.
     originalError = console.error
@@ -91,8 +92,52 @@ describe('generators:app', () => {
       'package.json',
       'README.md',
     ]
-    files.forEach(file => {
+    files.forEach((file) => {
       expect(fs.existsSync(file)).toBe(true)
     })
+  })
+
+  it('uses yarn by default', async () => {
+    jest.resetAllMocks()
+
+    helpers.mockPrompt(generator, {
+      title: 'foo',
+      description: '',
+      author: 'Bar Baz',
+      license: '',
+    })
+
+    commandExistsSync.sync.mockReturnValueOnce(true)
+
+    generator.yarnInstall = jest.fn()
+    generator.npmInstall = jest.fn()
+
+    await generator.run()
+
+    expect(commandExistsSync.sync).toHaveBeenCalledTimes(1)
+    expect(generator.yarnInstall).toHaveBeenCalledTimes(2)
+    expect(generator.npmInstall).not.toHaveBeenCalled()
+  })
+
+  it('falls back to npm if yarn is not detected', async () => {
+    jest.resetAllMocks()
+
+    helpers.mockPrompt(generator, {
+      title: 'foo',
+      description: '',
+      author: 'Bar Baz',
+      license: '',
+    })
+
+    commandExistsSync.sync.mockReturnValueOnce(false)
+
+    generator.yarnInstall = jest.fn()
+    generator.npmInstall = jest.fn()
+
+    await generator.run()
+
+    expect(commandExistsSync.sync).toHaveBeenCalledTimes(1)
+    expect(generator.yarnInstall).not.toHaveBeenCalled()
+    expect(generator.npmInstall).toHaveBeenCalledTimes(2)
   })
 })
