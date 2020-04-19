@@ -61,10 +61,10 @@ module.exports = class extends Generator {
 
     // Copy templates with args.
     const templates = [
-      ['package.json', { ...this.answers }],
+      [`package.${commandExistsSync('yarn') ? 'yarn' : 'npm'}.json`, { ...this.answers }, 'package.json'],
       ['README.md', { title: this.answers.title, description: this.answers.description }],
     ]
-    templates.forEach((v) => this.fs.copyTpl(this.templatePath(v[0]), this.destinationPath(v[0]), v[1]))
+    templates.forEach((v) => this.fs.copyTpl(this.templatePath(v[0]), this.destinationPath(v[2] || v[0]), v[1]))
 
     // Use this to track fixed versions of dependencies. Example:
     // this.fs.extendJSON(this.destinationPath('package.json'), {

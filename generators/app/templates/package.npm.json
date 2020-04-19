@@ -9,10 +9,10 @@
     "compile": "tsc",
     "bundle": "webpack",
     "minify": "babel build/bundle.js --out-file dist/<%= title %>.js",
-    "dev": "yarn test --watch",
-    "start": "yarn compile && node build/index.js",
-    "build-all": "yarn clean && yarn lint && yarn test && yarn compile && yarn bundle && yarn minify",
-    "build-exe": "yarn build-all && pkg --out-path dist/ dist/<%= title %>.js"
+    "dev": "jest --watch",
+    "start": "npm run compile && node build/index.js",
+    "build-all": "npm run clean && npm run lint && npm run test && npm run compile && npm run bundle && npm run minify",
+    "build-exe": "npm run build-all && pkg --out-path dist/ dist/<%= title %>.js"
   },
   "author": "<%= author %>",
   "license": "<%= license %>"

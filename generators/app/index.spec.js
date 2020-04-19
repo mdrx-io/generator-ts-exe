@@ -107,14 +107,13 @@ describe('generators:app', () => {
       license: '',
     })
 
-    commandExistsSync.sync.mockReturnValueOnce(true)
+    commandExistsSync.sync.mockReturnValue(true)
 
     generator.yarnInstall = jest.fn()
     generator.npmInstall = jest.fn()
 
     await generator.run()
 
-    expect(commandExistsSync.sync).toHaveBeenCalledTimes(1)
     expect(generator.yarnInstall).toHaveBeenCalledTimes(2)
     expect(generator.npmInstall).not.toHaveBeenCalled()
   })
@@ -129,15 +128,50 @@ describe('generators:app', () => {
       license: '',
     })
 
-    commandExistsSync.sync.mockReturnValueOnce(false)
+    commandExistsSync.sync.mockReturnValue(false)
 
     generator.yarnInstall = jest.fn()
     generator.npmInstall = jest.fn()
 
     await generator.run()
 
-    expect(commandExistsSync.sync).toHaveBeenCalledTimes(1)
     expect(generator.yarnInstall).not.toHaveBeenCalled()
     expect(generator.npmInstall).toHaveBeenCalledTimes(2)
+  })
+
+  it('uses yarn in package.json if yarn is detected', async () => {
+    jest.resetAllMocks()
+
+    helpers.mockPrompt(generator, {
+      title: 'foo',
+      description: '',
+      author: 'Bar Baz',
+      license: '',
+    })
+
+    commandExistsSync.sync.mockReturnValue(true)
+    generator.fs.copyTpl = jest.fn()
+
+    await generator.run()
+
+    expect(generator.fs.copyTpl.mock.calls[0][0].includes('yarn')).toBe(true)
+  })
+
+  it('uses npm in package.json if yarn is not detected', async () => {
+    jest.resetAllMocks()
+
+    helpers.mockPrompt(generator, {
+      title: 'foo',
+      description: '',
+      author: 'Bar Baz',
+      license: '',
+    })
+
+    commandExistsSync.sync.mockReturnValue(false)
+    generator.fs.copyTpl = jest.fn()
+
+    await generator.run()
+
+    expect(generator.fs.copyTpl.mock.calls[0][0].includes('npm')).toBe(true)
   })
 })
