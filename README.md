@@ -47,6 +47,8 @@ $ yarn build-all # Run through all steps to output a production-grade JS file.
 $ yarn build-exe # Same as "build-all" but output an executable binary.
 ```
 
+If `yarn` is not detected on your system, use `npm run` instead.
+
 The build scripts will output to the `dist/` directory and give you a single JS file that a user can run through their local Node.js runtime, and optionally an executable binary to deploy.
 
 ## Project Structure
